@@ -13,12 +13,14 @@
 
 <body>
 <h3>File Upload:</h3>
-Select a file to upload: <br />
+<u><strong>Select a file to upload: </strong></u>(ensure that file name is names 'Client_List.txt')<br /><br />
 <form action = "uploadFile.jsp" method = "post" enctype = "multipart/form-data">
   <input type = "file" name = "file" size = "5000" />
   <br />
   <input type = "submit" value = "Upload File" />
 </form>
+<br>
+<a href="iterator.jsp">View Client Data</a>
 </body>
 
 </html>

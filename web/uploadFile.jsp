@@ -15,10 +15,21 @@
 
 <%
     File file ;
-    int maxFileSize = 5000 * 1024;
+    int maxFileSize = 5000 * 1024; // set the max file size for uploaded files
     int maxMemSize = 5000 * 1024;
     ServletContext context = pageContext.getServletContext();
     String filePath = context.getInitParameter("file-upload");
+
+    // Code to check c:\data for existing files and empty folder if there is
+    File exFile = new File(filePath);
+    String[] myFiles;
+    if (exFile.isDirectory()) {
+        myFiles = exFile.list();
+        for (int i = 0; i < myFiles.length; i++) {
+            File myFile = new File(exFile, myFiles[i]);
+            myFile.delete();
+        }
+    }
 
     // Verify the content type
     String contentType = request.getContentType();
@@ -54,10 +65,10 @@
                 FileItem fi = (FileItem)i.next();
                 if ( !fi.isFormField () ) {
                     // Get the uploaded file parameters
-                    String fieldName = fi.getFieldName();
+                    //String fieldName = fi.getFieldName();
                     String fileName = fi.getName();
-                    boolean isInMemory = fi.isInMemory();
-                    long sizeInBytes = fi.getSize();
+                    //boolean isInMemory = fi.isInMemory();
+                    //long sizeInBytes = fi.getSize();
 
                     // Write the file
                     if( fileName.lastIndexOf("\\") >= 0 ) {
@@ -68,8 +79,8 @@
                                 fileName.substring(fileName.lastIndexOf("\\")+1)) ;
                     }
                     fi.write( file ) ;
-                    out.println("Uploaded Filename: " + filePath +
-                            fileName + "<br>");
+                    out.println("Success!! Uploaded Filename: " + filePath +
+                            fileName + "<br><a href=\"iterator.jsp\">Click to view Client Data</a>");
                 }
             }
             out.println("</body>");

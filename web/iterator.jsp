@@ -1,18 +1,13 @@
 <%--
-  Created by IntelliJ IDEA.
-  User: WessonAN
-  Date: 2019/09/11
-  Time: 03:28 PM
-  To change this template use File | Settings | File Templates.
+  Created by Adam Wesson
 --%>
 <%--Iterator.jsp --%>
-<%@ page contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1" %>
+<%@ page contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Insert title here</title>
+    <title>Client Database - View</title>
 </head>
 <body>
 <%--Importing all the dependent classes--%>
@@ -20,19 +15,22 @@
 <%@ page import="java.util.*" %>
 <%@ page buffer="32768kb" %>
 
+<%-- creating ClientDetail arraylists that get data from the Controller --%>
 <% ArrayList<ClientDetails> clientList = (ArrayList) request.getAttribute("clients"); %> <%--Assigning ArrayList object containing Client data to the local object --%>
 <% ArrayList<ClientDetails> surnameList = (ArrayList) request.getAttribute("SurnameList"); %> <%--Assigning ArrayList object containing Client data to the local object --%>
-<% ArrayList<ClientDetails> yearList = (ArrayList) request.getAttribute("YearList"); %>
-<% ArrayList<ClientDetails> bdayList = (ArrayList) request.getAttribute("BdayList"); %>
-<% ArrayList<ClientDetails> surnameList2 = (ArrayList) request.getAttribute("SurnameList2"); %>
+<% ArrayList<ClientDetails> yearList = (ArrayList) request.getAttribute("YearList"); %><%--Assigning ArrayList object containing Client data to the local object --%>
+<% ArrayList<ClientDetails> bdayList = (ArrayList) request.getAttribute("BdayList"); %><%--Assigning ArrayList object containing Client data to the local object --%>
+<% ArrayList<ClientDetails> surnameList2 = (ArrayList) request.getAttribute("SurnameList2"); %><%--Assigning ArrayList object containing Client data to the local object --%>
 
-<strong><a href="<%=request.getContextPath()%>/IteratorExample?type=getDetails">Show Client Details | </a></strong>
-<strong><a href="<%=request.getContextPath()%>/IteratorExample?type=sortSurname">Sorted by Surname | </a></strong>
-<strong><a href="<%=request.getContextPath()%>/IteratorExample?type=sortYear">Sorted by Birth Year | </a></strong>
-<strong><a href="<%=request.getContextPath()%>/IteratorExample?type=sortBday">Sorted by Same Birthday</a></strong>
+<strong><a href="<%=request.getContextPath()%>/IteratorExample?type=getDetails">Show Client Details</a></strong> |
+<strong><a href="<%=request.getContextPath()%>/IteratorExample?type=sortSurname">Sorted by Surname</a></strong> |
+<strong><a href="<%=request.getContextPath()%>/IteratorExample?type=sortYear">Sorted by Birth Year</a></strong> |
+<strong><a href="<%=request.getContextPath()%>/IteratorExample?type=sortBday">Sorted by Same Birthday</a></strong> |
+<strong><a href="index.jsp">Load new Data</a></strong>
 
-<br>
-<table cellspacing="2" cellpadding="2">
+<p>
+<p>
+<table cellspacing="0" cellpadding="2" border="1">
     <tr>
         <th>First Name</th>
         <th>Last Name</th>
@@ -41,13 +39,13 @@
         <th>Post Code</th>
     </tr>
     <%
-        // Iterating through clientList
+        // Iterating through clientList to get client attributes to display on the page
         if (request.getAttribute("clients") != null)  // Null check for the object
         {
             Iterator<ClientDetails> iterator = clientList.iterator();  // Iterator interface
             while (iterator.hasNext())  // iterate through all the data until the last record
             {
-                ClientDetails clientDetails = iterator.next(); //assign individual employee record to the employee class object
+                ClientDetails clientDetails = iterator.next(); //assign individual Client record to the ClientDetails class object
     %>
     <tr>
         <td><%=clientDetails.getFirstName()%>
@@ -63,23 +61,23 @@
     </tr>
     <%
             }
-        } else if        // Iterating through clientList
+        } else if
+        // Iterating through clientList based on sort by Surname
         (request.getAttribute("SurnameList") != null)  // Null check for the object
         {
-            Map<String, Integer> map = new HashMap<String, Integer>();
+            Map<String, Integer> map = new HashMap<String, Integer>(); //create Map to store unique list of Surnames to populate Select list
 
             int x = 0;
-            if(request.getAttribute("SurnameList2") != null){
+            if(request.getAttribute("SurnameList2") != null){ //checks if list was previously filtered and repopulates Map with fresh list of surnames
             for (ClientDetails cli : surnameList2) {
                 String key = cli.getLastName();
                 if (!map.containsKey(key)) {
                     map.put(key, x);
                     x++;
                 }
-
             }
             } else {
-            for (ClientDetails cli : surnameList) {
+            for (ClientDetails cli : surnameList) { // populates Map with a list of unique surnames
                 String key = cli.getLastName();
                 if (!map.containsKey(key)) {
                     map.put(key, x);
@@ -89,25 +87,24 @@
             }
             }
 %>
+    <u><strong>Filter by Surname:</strong></u><br>
     <form action="<%=request.getContextPath()%>/IteratorExample" method="get" name="surN" enctype="multipart/form-data">
         <input name="type" type="hidden" value="sortSurname" />
         <select name="surname">
     <%
-            for(Map.Entry m : map.entrySet()){
+            for(Map.Entry m : map.entrySet()){ //loop through Map to build Select List dropdown
                 out.println("<option name=\""+m.getKey()+"\">"+m.getKey()+"</option>");
             }
     %>
         </select>
         <input type="submit" value="Submit" />
     </form>
+    <p>
     <%
-
-
-
             Iterator<ClientDetails> iterator = surnameList.iterator();  // Iterator interface
             while (iterator.hasNext())  // iterate through all the data until the last record
             {
-                ClientDetails surnameDetails = iterator.next(); //assign individual employee record to the employee class object
+                ClientDetails surnameDetails = iterator.next(); //assign individual Client record to the ClientDetails class object
     %>
     <tr>
         <td><%=surnameDetails.getFirstName()%>
@@ -124,22 +121,23 @@
     <%
             }
         } else if
-            (request.getAttribute("YearList") != null)  // Null check for the object
+            (request.getAttribute("YearList") != null)  // Check sorting by Birth Year. Null check for the object
             {
 
                 %>
+<u><strong>Filter by Year of Birth:</strong></u><br>
     <form action="/ClientDatabase_war/IteratorExample" method="get" enctype="multipart/form-data">
         <input name="type" type="hidden" value="sortYear" />
         <label>Enter Birth Year: <input name="bYear" type="text" value="" /> (Format: yyyy)</label>
         <input name="submit" type="submit" value="Submit" />
     </form>
-
+<p>
     <%
 
                 Iterator<ClientDetails> iterator = yearList.iterator();  // Iterator interface
                 while (iterator.hasNext())  // iterate through all the data until the last record
                 {
-                    ClientDetails yearDetails = iterator.next(); //assign individual employee record to the employee class object
+                    ClientDetails yearDetails = iterator.next(); //assign individual Client record to the ClientDetails class object
     %>
     <tr>
         <td><%=yearDetails.getFirstName()%>
@@ -156,10 +154,11 @@
     <%
             }
         } else if
-    (request.getAttribute("BdayList") != null)  // Null check for the object
+    (request.getAttribute("BdayList") != null)  // Check if sorted by Birth Day. Null check for the object
     {
 
     %>
+<u><strong>Filter by Birthday:</strong></u><br>
     <form action="/ClientDatabase_war/IteratorExample" method="get" enctype="multipart/form-data">
         <input name="type" type="hidden" value="sortBday" />
         <select name="dobMonth">
@@ -213,25 +212,24 @@
         </select>
         <input name="submit" type="submit" value="Submit" />
     </form>
-    <p>OR</p>
+    <br>~OR~<br>
+<u><strong>Filter by Age Range:</strong></u><br>
     <form action="/ClientDatabase_war/IteratorExample" method="get" enctype="multipart/form-data">
         <input name="type" type="hidden" value="sortBday" />
-        <label>Enter start age:
+        <label>Enter start of range age:
             <input name="startAge" type="text" value="" />
         </label>
-        <label>Enter end age:
+        <label>--> Enter end range age:
             <input name="endAge" type="text" value="" />
         </label>
-        <input name="submit" type="submit" value="Submit" />
+        <input name="submit" type="submit" value="Submit" />(Example: 30 - 40 for clients between this date range)
     </form>
+<p></p>
     <%//
-
-
-
         Iterator<ClientDetails> iterator = bdayList.iterator();  // Iterator interface
         while (iterator.hasNext())  // iterate through all the data until the last record
         {
-            ClientDetails dobDetails = iterator.next(); //assign individual employee record to the employee class object
+            ClientDetails dobDetails = iterator.next(); //assign individual Client record to the ClientDetails class object
     %>
     <tr>
         <td><%=dobDetails.getFirstName()%>

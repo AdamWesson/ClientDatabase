@@ -5,7 +5,7 @@
 <context-param>
     <param-name>file-upload</param-name>
     <param-value>
-        e:\xampp\tomcat\webapps\data\
+        c:\data\
     </param-value>
 </context-param>
 

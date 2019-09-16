@@ -1,4 +1,5 @@
 package com.dao;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -46,6 +47,7 @@ public class ClientDetails implements Comparable {
         return postCode;
     }
 
+    //method to read data from txt file and add to ArrayList
     public static ArrayList<ClientDetails> readClientFromFile(String fileName) {
         ArrayList<ClientDetails> clients = new ArrayList<>();
         Path pathToFile = Paths.get(fileName);
@@ -79,6 +81,7 @@ public class ClientDetails implements Comparable {
         return clients;
     }
 
+    // Method to create instance of a client
     private static ClientDetails createClient(String[] clientDetail){
         String fn = clientDetail[0];
         String ln = clientDetail[1];
@@ -90,7 +93,7 @@ public class ClientDetails implements Comparable {
     }
 
 
-    /*Comparator for sorting the list by com.devApp.Client Surname*/
+    // Comparator for sorting the list by Client Surname
     public static Comparator<ClientDetails> compareLastName = new Comparator<ClientDetails>() {
 
         public int compare(ClientDetails s1, ClientDetails s2) {
@@ -102,17 +105,7 @@ public class ClientDetails implements Comparable {
         }};
 
 
-
-
-
-
-
-
-
-
-
-
-    /*Comparator for sorting the list by com.devApp.Client Birth Year*/
+    //Comparator for sorting the list by Client Birth Year
     public static Comparator<ClientDetails> compareDOB = new Comparator<ClientDetails>() {
 
         public int compare(ClientDetails d1, ClientDetails d2) {
@@ -138,7 +131,7 @@ public class ClientDetails implements Comparable {
 
         }};
 
-    /*Comparator for sorting the list by com.devApp.Client Same birthday*/
+    // Comparator for sorting the list by Client Same birthday
     public static Comparator<ClientDetails> compareBday = new Comparator<ClientDetails>() {
 
         public int compare(ClientDetails b1, ClientDetails b2) {
