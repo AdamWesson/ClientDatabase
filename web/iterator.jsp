@@ -13,7 +13,7 @@
 <%--Importing all the dependent classes--%>
 <%@ page import="com.dao.ClientDetails" %>
 <%@ page import="java.util.*" %>
-<%@ page buffer="32768kb" %>
+<%@ page buffer="32768kb" %><%--set buffer size to handle large amounts of records--%>
 
 <%-- creating ClientDetail arraylists that get data from the Controller --%>
 <% ArrayList<ClientDetails> clientList = (ArrayList) request.getAttribute("clients"); %> <%--Assigning ArrayList object containing Client data to the local object --%>
@@ -22,6 +22,7 @@
 <% ArrayList<ClientDetails> bdayList = (ArrayList) request.getAttribute("BdayList"); %><%--Assigning ArrayList object containing Client data to the local object --%>
 <% ArrayList<ClientDetails> surnameList2 = (ArrayList) request.getAttribute("SurnameList2"); %><%--Assigning ArrayList object containing Client data to the local object --%>
 
+<%--Menu links--%>
 <strong><a href="<%=request.getContextPath()%>/IteratorExample?type=getDetails">Show Client Details</a></strong> |
 <strong><a href="<%=request.getContextPath()%>/IteratorExample?type=sortSurname">Sorted by Surname</a></strong> |
 <strong><a href="<%=request.getContextPath()%>/IteratorExample?type=sortYear">Sorted by Birth Year</a></strong> |
@@ -65,7 +66,7 @@
         // Iterating through clientList based on sort by Surname
         (request.getAttribute("SurnameList") != null)  // Null check for the object
         {
-            Map<String, Integer> map = new HashMap<String, Integer>(); //create Map to store unique list of Surnames to populate Select list
+            Map<String, Integer> map = new HashMap<String, Integer>(); //create HashMap to store unique list of Surnames to populate Select list
 
             int x = 0;
             if(request.getAttribute("SurnameList2") != null){ //checks if list was previously filtered and repopulates Map with fresh list of surnames
@@ -159,12 +160,13 @@
 
     %>
 <u><strong>Filter by Birthday:</strong></u><br>
+    <%--Form to select day & month to filter by Birthday--%>
     <form action="/ClientDatabase_war/IteratorExample" method="get" enctype="multipart/form-data">
         <input name="type" type="hidden" value="sortBday" />
         <select name="dobMonth">
             <option>- Month -</option>
             <option value="1">January</option>
-            <option value="2">Febuary</option>
+            <option value="2">February</option>
             <option value="3">March</option>
             <option value="4">April</option>
             <option value="5">May</option>
@@ -214,6 +216,8 @@
     </form>
     <br>~OR~<br>
 <u><strong>Filter by Age Range:</strong></u><br>
+
+    <%--Form to filter on Age range--%>
     <form action="/ClientDatabase_war/IteratorExample" method="get" enctype="multipart/form-data">
         <input name="type" type="hidden" value="sortBday" />
         <label>Enter start of range age:

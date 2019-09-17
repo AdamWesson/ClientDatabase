@@ -47,7 +47,7 @@ public class ClientDetails implements Comparable {
         return postCode;
     }
 
-    //method to read data from txt file and add to ArrayList
+    // method to read data from txt file and add to ArrayList
     public static ArrayList<ClientDetails> readClientFromFile(String fileName) {
         ArrayList<ClientDetails> clients = new ArrayList<>();
         Path pathToFile = Paths.get(fileName);
@@ -62,7 +62,7 @@ public class ClientDetails implements Comparable {
             // loop through txt file until all the lines are read
             while (line != null) {
 
-                // use string.split to create array of details that are separated by a Tab
+                // use string.split method to create array of details that are separated by a Tab
                 String[] attributes = line.split("\t");
 
                 ClientDetails client = createClient(attributes);
@@ -128,7 +128,6 @@ public class ClientDetails implements Comparable {
             //ascending order
             assert dateOfBirth2 != null;
             return dateOfBirth1.compareTo(dateOfBirth2);
-
         }};
 
     // Comparator for sorting the list by Client Same birthday
@@ -156,8 +155,6 @@ public class ClientDetails implements Comparable {
             return bDay1.compareTo(bDay2);
 
         }};
-
-
 
     @Override
     public int compareTo(Object o) {

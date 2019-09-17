@@ -1,9 +1,5 @@
 <%--
-  Created by IntelliJ IDEA.
-  User: WessonAN
-  Date: 2019/09/09
-  Time: 09:40 AM
-  To change this template use File | Settings | File Templates.
+  Created by Adam Wesson
 --%>
 <%@ page import = "javax.servlet.ServletContext" %>
 <%@ page import = "java.io.File" %>
@@ -25,16 +21,18 @@
     String[] myFiles;
     if (exFile.isDirectory()) {
         myFiles = exFile.list();
-        for (int i = 0; i < myFiles.length; i++) {
-            File myFile = new File(exFile, myFiles[i]);
-            myFile.delete();
+        if (myFiles != null) {
+            for (int i = 0; i < myFiles.length; i++) {
+                File myFile = new File(exFile, myFiles[i]);
+                myFile.delete();
+            }
         }
     }
 
     // Verify the content type
     String contentType = request.getContentType();
 
-    if ((contentType.indexOf("multipart/form-data") >= 0)) {
+    if ((contentType.contains("multipart/form-data"))) {
         DiskFileItemFactory factory = new DiskFileItemFactory();
         // maximum size that will be stored in memory
         factory.setSizeThreshold(maxMemSize);
@@ -65,10 +63,7 @@
                 FileItem fi = (FileItem)i.next();
                 if ( !fi.isFormField () ) {
                     // Get the uploaded file parameters
-                    //String fieldName = fi.getFieldName();
                     String fileName = fi.getName();
-                    //boolean isInMemory = fi.isInMemory();
-                    //long sizeInBytes = fi.getSize();
 
                     // Write the file
                     if( fileName.lastIndexOf("\\") >= 0 ) {
