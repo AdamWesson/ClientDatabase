@@ -65,13 +65,18 @@ public class ClientDetails implements Comparable {
                 // use string.split method to create array of details that are separated by a Tab
                 String[] attributes = line.split("\t");
 
+                // check to see if first row of txt file is text headers by checking if column 5 contains P for Post Code
+                if(attributes[4].contains("P")){
+                    line = br.readLine();
+                } else {
                 ClientDetails client = createClient(attributes);
 
-                // adding Clients into ArrayList
-                clients.add(client);
+                    // adding Clients into ArrayList
+                    clients.add(client);
 
-                // read next line before looping
-                line = br.readLine();
+                    // read next line before looping
+                    line = br.readLine();
+                }
             }
 
         } catch (IOException ioe) {
