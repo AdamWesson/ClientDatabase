@@ -8,6 +8,9 @@
 </head>
 
 <body>
+<h1>Welcome to the Client Database Viewer</h1>
+<strong>Step 1: </strong>Load Client records:
+<p>
 <h3><u>File Upload:</u></h3>
 <u><strong>Select a file to upload: </strong></u>(ensure that file name = 'Client_List.txt')<br /><br />
 <form action = "uploadFile.jsp" method = "post" enctype = "multipart/form-data">
