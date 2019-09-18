@@ -23,10 +23,10 @@
 <% ArrayList<ClientDetails> surnameList2 = (ArrayList) request.getAttribute("SurnameList2"); %><%--Assigning ArrayList object containing Client data to the local object --%>
 
 <%--Menu links--%>
-<strong><a href="<%=request.getContextPath()%>/IteratorExample?type=getDetails">Show Client Details</a></strong> |
-<strong><a href="<%=request.getContextPath()%>/IteratorExample?type=sortSurname">Sorted by Surname</a></strong> |
-<strong><a href="<%=request.getContextPath()%>/IteratorExample?type=sortYear">Sorted by Birth Year</a></strong> |
-<strong><a href="<%=request.getContextPath()%>/IteratorExample?type=sortBday">Sorted by Same Birthday</a></strong> |
+<strong><a href="<%=request.getContextPath()%>/IteratorExample?type=getDetails">View Client Details</a></strong> |
+<strong><a href="<%=request.getContextPath()%>/IteratorExample?type=sortSurname">Group by Surname</a></strong> |
+<strong><a href="<%=request.getContextPath()%>/IteratorExample?type=sortYear">Group by Birth Year</a></strong> |
+<strong><a href="<%=request.getContextPath()%>/IteratorExample?type=sortBday">Group by Same Birthday</a></strong> |
 <strong><a href="index.jsp">Load new Data</a></strong>
 
 <p>
